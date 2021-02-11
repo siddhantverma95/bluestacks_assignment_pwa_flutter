@@ -1,12 +1,10 @@
 import 'package:dio/dio.dart';
 
 class RestClient {
-  final String _endPoint;
   Dio _dio;
 
-  RestClient(this._endPoint) {
-    var options = BaseOptions(
-        baseUrl: _endPoint, connectTimeout: 10000, receiveTimeout: 30000);
+  RestClient() {
+    var options = BaseOptions(connectTimeout: 10000, receiveTimeout: 30000);
     _dio = Dio(options);
     _dio.interceptors
         .add(LogInterceptor(requestBody: true, responseBody: true));

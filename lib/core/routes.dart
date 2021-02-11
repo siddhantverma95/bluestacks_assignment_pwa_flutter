@@ -1,7 +1,8 @@
 import 'package:bluestack_assignment_pwa_flutter/view/home/home.dart';
+import 'package:bluestack_assignment_pwa_flutter/view/login/login.dart';
 import 'package:flutter/material.dart';
 
-enum Screen { login, signup, home }
+enum Screen { login, home }
 
 class Router {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -9,13 +10,8 @@ class Router {
 
     switch (screen) {
       case Screen.login:
-        return FadeRoute(
-          page: Home(),
-        );
-
-      case Screen.signup:
         return MaterialPageRoute(
-          builder: (_) => Home(),
+          builder: (_) => Login(),
         );
 
       case Screen.home:

@@ -17,7 +17,7 @@ class Repository implements RepositoryInterface {
   CacheHelper _cacheHelper;
 
   Repository._internal() {
-    _apiHelper = ApiHelperImpl(RestClient(ApiEndPoints.recommendedEndpoint));
+    _apiHelper = ApiHelperImpl(RestClient());
     _cacheHelper = CacheHelperImpl(CacheClient());
   }
 
