@@ -138,7 +138,7 @@ class _LoginFormWidgetState extends AppStatefulWidgetState<LoginFormWidget> {
             height: 8.height,
           ),
           Container(
-            width: double.infinity,
+            width: 640.width / 1.3,
             child: RaisedButton(
                 padding: EdgeInsets.symmetric(vertical: 8.height),
                 color: appColors.accentColor,
@@ -184,7 +184,7 @@ class _SignInBarWidgetState extends AppStatefulWidgetState<SignInBarWidget> {
   Widget setView(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.all(24.fontSize),
+      padding: EdgeInsets.all(16.fontSize),
       color: appColors.accentColor.withOpacity(.4),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

@@ -46,7 +46,7 @@ class MyApp extends StatelessWidget {
                     primaryColor: Colors.white,
                   ),
                   onGenerateRoute: _routes.Router.generateRoute,
-                  initialRoute: _routes.Screen.home.toString(),
+                  initialRoute: _routes.Screen.login.toString(),
                 ),
               );
             });

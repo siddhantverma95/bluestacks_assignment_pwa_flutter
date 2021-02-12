@@ -55,4 +55,12 @@ class LoginViewModel {
       return Future.value(false);
     }
   }
+
+  Future<void> onLogout() {
+    return repo.cacheHelper.saveUserData(false);
+  }
+
+  Future<bool> getLoggedIn() {
+    return repo.cacheHelper.getUserData();
+  }
 }
