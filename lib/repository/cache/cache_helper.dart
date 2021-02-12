@@ -1,20 +1,23 @@
-import 'dart:collection';
-
 import 'package:bluestack_assignment_pwa_flutter/core/cache_client.dart';
 
 abstract class CacheKeys {
-  static const String TOKEN = "token";
-  static const String USER_DATA = "userData";
+  static const String LOCALE = "locale";
+  static const String LANGUAGE = 'language';
+  static const String IS_LOGGED_IN = "is_looged_in";
 }
 
 abstract class CacheHelper {
-  Future<String> getAccessToken();
+  Future<String> getLocale();
 
-  Future<String> getUserData();
+  Future<String> getLanguage();
 
-  Future saveAccessToken(String token);
+  Future<bool> getUserData();
 
-  Future saveUserData(String userId);
+  Future saveLocale(String locale);
+
+  Future saveLanguage(String lang);
+
+  Future saveUserData(bool isLoggedIn);
 }
 
 class CacheHelperImpl extends CacheHelper {
@@ -23,24 +26,32 @@ class CacheHelperImpl extends CacheHelper {
   CacheHelperImpl(this._cache);
 
   @override
-  Future<String> getAccessToken() {
-    return _cache.getString(CacheKeys.TOKEN);
+  Future<String> getLocale() {
+    return _cache.getString(CacheKeys.LOCALE);
   }
 
   @override
-  Future<String> getUserData() {
-    // TODO: implement getUserData
-    throw UnimplementedError();
+  Future<bool> getUserData() {
+    return _cache.getBool(CacheKeys.IS_LOGGED_IN);
   }
 
   @override
-  Future saveAccessToken(String token) {
-    return _cache.putString(CacheKeys.TOKEN, token);
+  Future saveLocale(String locale) {
+    return _cache.putString(CacheKeys.LOCALE, locale);
   }
 
   @override
-  Future saveUserData(String userId) {
-    // TODO: implement saveUserData
-    throw UnimplementedError();
+  Future saveUserData(bool isLoggedIn) {
+    return _cache.putBool(CacheKeys.IS_LOGGED_IN, isLoggedIn);
+  }
+
+  @override
+  Future<String> getLanguage() {
+    return _cache.getString(CacheKeys.LANGUAGE);
+  }
+
+  @override
+  Future saveLanguage(String lang) {
+    return _cache.putString(CacheKeys.LANGUAGE, lang);
   }
 }

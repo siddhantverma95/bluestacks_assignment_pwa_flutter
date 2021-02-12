@@ -1,13 +1,42 @@
-import 'package:bluestack_assignment_pwa_flutter/core/app_stateless_widget.dart';
-import 'package:bluestack_assignment_pwa_flutter/model/tournaments.dart';
-import 'package:bluestack_assignment_pwa_flutter/viewModel/home_view_model.dart';
+import 'package:bluestack_assignment_pwa_flutter/core/app_stateful_widget.dart';
+import 'package:bluestack_assignment_pwa_flutter/core/routes.dart';
+import 'package:bluestack_assignment_pwa_flutter/view/home/home_widgets.dart';
+import 'package:bluestack_assignment_pwa_flutter/viewModel/login_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 import 'package:states_rebuilder/states_rebuilder.dart';
 
-class Home extends AppStatelessWidget {
+class Home extends AppStatefulWidget {
+  @override
+  _HomeState createState() => _HomeState();
+}
+
+class _HomeState extends AppStatefulWidgetState {
   @override
   Widget setView(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          'Flyingwolf',
+          style: textTheme.s26w600,
+        ),
+        actions: [
+          IconButton(
+              icon: Icon(Icons.logout),
+              onPressed: () {
+                RM.get<LoginViewModel>().setState((s) => s.onLogout()).then(
+                    (value) => Navigator.pushReplacementNamed(
+                        context, Screen.login.toString()));
+              })
+        ],
+        elevation: 0,
+        leading: Icon(Icons.menu),
+      ),
+      body: _getResponsiveHome(),
+    );
+  }
+
+  Widget _getResponsiveHome() {
     return ScreenTypeLayout(
       mobile: _getHomeMobile(),
       tablet: _getHomeTablet(),
@@ -16,86 +45,31 @@ class Home extends AppStatelessWidget {
   }
 
   Widget _getHomeMobile() {
-    return WhenRebuilder<HomeViewModel>(
-      observe: () =>
-          RM.get<HomeViewModel>()..setState((s) => s.fetchTournaments()),
-      onData: (HomeViewModel state) {
-        var tournamentList = state.getTournaments.data.tournaments;
-        return ListView.builder(
-            itemCount: tournamentList.length,
-            itemBuilder: (context, index) =>
-                _getRecommendedCard(tournamentList.elementAt(index)));
-      },
-      onIdle: () => Center(
-        child: CircularProgressIndicator(),
-      ),
-      onWaiting: () => Center(
-        child: CircularProgressIndicator(),
-      ),
-      onError: (error) => Center(child: Text(error)),
+    return Column(
+      children: [
+        UserDetailsWidget(),
+        Expanded(child: RecommendedCardList()),
+      ],
     );
   }
 
   Widget _getHomeTablet() {
-    return Center(
-      child: Text("Hello Tablet"),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        UserDetailsWidget(),
+        Expanded(child: RecommendedCardList()),
+      ],
     );
   }
 
   Widget _getHomeDesktop() {
-    return Center(
-      child: Text("Hello Desktop"),
-    );
-  }
-
-  Widget _getRecommendedText() {
-    return Text('Recommended For You');
-  }
-
-  Widget _getRecommendedCard(Tournament obj) {
-    return Card(
-      margin: EdgeInsets.all(16),
-      clipBehavior: Clip.antiAlias,
-      elevation: 8,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Image.network(
-            obj.coverUrl,
-            width: double.infinity,
-            height: 120,
-            fit: BoxFit.cover,
-          ),
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 18),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      width: 300,
-                      child: Text(
-                        obj.name,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(fontWeight: FontWeight.w600),
-                      ),
-                    ),
-                    SizedBox(height: 16),
-                    Text(
-                      obj.gameName,
-                      style: TextStyle(color: Colors.grey, fontSize: 14),
-                    ),
-                  ],
-                ),
-                Icon(Icons.chevron_right),
-              ],
-            ),
-          ),
-        ],
-      ),
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Expanded(flex: 2, child: UserDetailsWidget()),
+        Expanded(flex: 10, child: RecommendedCardList()),
+      ],
     );
   }
 }
