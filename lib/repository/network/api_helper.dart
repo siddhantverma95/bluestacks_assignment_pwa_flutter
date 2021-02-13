@@ -7,7 +7,7 @@ class ApiEndPoints {
   static final String loginUserEndpoint =
       'https://0f6fec95-2ecf-4470-9720-956c15f4fd29.mock.pstmn.io/';
   static final String recommendedEndpoint =
-      "http://tournaments-dot-game-tv-prod.uc.r.appspot.com/tournament/api/";
+      "https://tournaments-dot-game-tv-prod.uc.r.appspot.com/tournament/api/";
 
   //apis
   static final String tournamentApi =
